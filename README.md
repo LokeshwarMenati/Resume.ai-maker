@@ -150,3 +150,6 @@ Optional: set `VITE_API_URL` to your deployed API (e.g. `https://your-api.onrend
 ## License
 
 MIT — use and adapt freely for your portfolio or product.
+
+## Run
+https://frontend-sand-eight-xya4czd8dy.vercel.app/
