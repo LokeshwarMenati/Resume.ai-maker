@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .hero-gradient-text {
+    background-image: linear-gradient(90deg, #0f172a 0%, #4f46e5 30%, #c026d3 60%, #0ea5e9 100%);
+    background-size: 220% auto;
+    animation: gradientMove 6s linear infinite;
+  }
+
+  .dark .hero-gradient-text {
+    background-image: linear-gradient(90deg, #ffffff 0%, #c4b5fd 32%, #f0abfc 62%, #93c5fd 100%);
+  }
+
+  .hero-headline-glow {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.34) 0%, rgba(236, 72, 153, 0.18) 42%, rgba(14, 165, 233, 0) 74%);
+    filter: blur(28px);
+    animation: pulse 5.8s ease-in-out infinite;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100;
+    color-scheme: light;
+  }
+
+  html.dark body {
+    color-scheme: dark;
+  }
+
+  *,
+  ::before,
+  ::after {
+    @apply motion-reduce:transition-none;
+  }
+}

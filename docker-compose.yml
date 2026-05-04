@@ -1,0 +1,11 @@
+# Local MongoDB — run from resume-builder/:  docker compose up -d
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - resume_mongo_data:/data/db
+
+volumes:
+  resume_mongo_data:
