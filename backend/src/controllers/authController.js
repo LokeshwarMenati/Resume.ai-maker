@@ -6,7 +6,8 @@ const { validationResult } = require("express-validator");
 const User = require("../models/User");
 
 function signToken(userId) {
-  return jwt.sign({ sub: userId }, process.env.JWT_SECRET, {
+  const secret = process.env.JWT_SECRET || "dev-resume-builder-secret-change-in-production";
+  return jwt.sign({ sub: userId }, secret, {
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   });
 }
@@ -38,8 +39,8 @@ exports.register = async (req, res) => {
       user: publicUserDoc(user),
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Registration failed" });
+    console.error("Register error:", err);
+    res.status(500).json({ message: err?.message || "Registration failed" });
   }
 };
 
@@ -60,8 +61,8 @@ exports.login = async (req, res) => {
       user: publicUserDoc(user),
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Login failed" });
+    console.error("Login error:", err);
+    res.status(500).json({ message: err?.message || "Login failed" });
   }
 };
 
@@ -70,10 +71,6 @@ exports.googleLogin = async (req, res) => {
     const googleClientId = String(process.env.GOOGLE_CLIENT_ID || "").trim();
     if (!googleClientId) {
       return res.status(503).json({ message: "Google sign-in is not configured on this server" });
-    }
-
-    if (!String(process.env.JWT_SECRET || "").trim()) {
-      return res.status(503).json({ message: "Server JWT_SECRET is not set — cannot issue session token" });
     }
 
     const idToken = String(req.body.credential || req.body.token || "").trim();
