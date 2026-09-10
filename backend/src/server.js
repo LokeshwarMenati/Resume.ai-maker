@@ -1,5 +1,9 @@
-const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
+try {
+  const path = require("path");
+  require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
+} catch {
+  /* dotenv is optional in serverless production */
+}
 
 const express = require("express");
 const cors = require("cors");
