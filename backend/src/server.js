@@ -7,6 +7,10 @@ if (process.env.NODE_ENV !== "production") {
   }
 }
 
+if (!process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = "dev-resume-builder-secret-change-in-production";
+}
+
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -22,9 +26,6 @@ const aiRoutes = require("./routes/aiRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-if (!process.env.JWT_SECRET) {
-  console.warn("JWT_SECRET missing — auth will fail verification");
-}
 if (!String(process.env.GOOGLE_CLIENT_ID || "").trim()) {
   console.warn("GOOGLE_CLIENT_ID missing — Google sign-in will return 503 until set in backend/.env");
 }
