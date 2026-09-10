@@ -1,8 +1,7 @@
 [build]
-  base = "frontend"
-  command = "npm run build"
+  command = "cd frontend && npm run build"
   publish = "frontend/dist"
-  functions = "frontend/netlify/functions"
+  functions = "netlify/functions"
 
 [functions]
   node_bundler = "esbuild"

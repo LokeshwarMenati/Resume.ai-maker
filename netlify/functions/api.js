@@ -1,5 +1,5 @@
 const serverless = require("serverless-http");
-const { app, connectDB } = require("../../../backend/src/server");
+const { app, connectDB } = require("../../backend/src/server");
 
 const handler = serverless(app);
 
