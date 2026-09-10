@@ -1,8 +1,10 @@
-try {
-  const path = require("path");
-  require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
-} catch {
-  /* dotenv is optional in serverless production */
+if (process.env.NODE_ENV !== "production") {
+  try {
+    const path = require("path");
+    require("dotenv")?.config?.({ path: path.join(__dirname, "..", ".env") });
+  } catch {
+    /* dotenv optional in production */
+  }
 }
 
 const express = require("express");
