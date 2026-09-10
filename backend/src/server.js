@@ -23,29 +23,10 @@ if (!String(process.env.GOOGLE_CLIENT_ID || "").trim()) {
   console.warn("GOOGLE_CLIENT_ID missing — Google sign-in will return 503 until set in backend/.env");
 }
 
-const defaultBrowserOrigins = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://localhost:4173",
-  "http://127.0.0.1:4173",
-];
-
-function resolveCorsOrigin() {
-  const raw = process.env.CLIENT_ORIGIN;
-  const allow = raw
-    ? raw.split(",").map((s) => s.trim()).filter(Boolean)
-    : defaultBrowserOrigins;
-  return (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allow.includes(origin)) return callback(null, true);
-    callback(null, false);
-  };
-}
-
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(
   cors({
-    origin: resolveCorsOrigin(),
+    origin: true,
     credentials: true,
   })
 );
@@ -85,4 +66,8 @@ mongoose.connection.on("disconnected", () => {
   console.log("MongoDB disconnected");
 });
 
-start();
+if (require.main === module) {
+  start();
+}
+
+module.exports = { app, connectDB };
